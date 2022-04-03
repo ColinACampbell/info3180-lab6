@@ -1,5 +1,23 @@
 <template>
   <div class="container">
+    <form
+      @submit.prevent="searchNews"
+      class="d-flex flex-column justify-content-center"
+    >
+      <div class="input-group mx-sm-3 mb-2">
+        <label class="visually-hidden" for="search">Search</label>
+        <input
+          type="search"
+          name="search"
+          v-model="searchTerm"
+          id="search"
+          class="form-control mb-2 mr-sm-2"
+          placeholder="Enter search term here"
+        />
+        <button class="btn btn-primary mb-2">Search</button>
+      </div>
+      <p>You are searching for {{ searchTerm }}</p>
+    </form>
     <div class="news-list row gx-5">
       <div
         v-bind:key="article.title"
@@ -45,9 +63,34 @@ export default {
         console.log(err);
       });
   },
+
+  methods: {
+    searchNews() {
+      let self = this;
+      console.log("Run");
+      fetch(
+        "https://newsapi.org/v2/everything?q=" +
+          self.searchTerm +
+          "&language=en",
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_NEWSAPI_TOKEN}`,
+          },
+        }
+      )
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
+          self.articles = data.articles;
+        });
+    },
+  },
   data() {
     return {
       articles: [],
+      searchTerm: "",
     };
   },
 };
@@ -55,9 +98,8 @@ export default {
 <style scoped>
 .news-item {
   height: 430px;
-  margin-top: 5px;
+  margin-top: 15px;
   box-shadow: 0px 0px 10px grey;
-  margin-top: 10px;
   border-radius: 10px;
 }
 
