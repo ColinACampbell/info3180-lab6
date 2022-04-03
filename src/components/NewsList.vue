@@ -32,15 +32,6 @@
       </div>
     </div>
   </div>
-  <ul class="news__list">
-    <li
-      v-bind:key="article.title"
-      v-for="article in articles"
-      class="news__item"
-    >
-      {{ article.title }}
-    </li>
-  </ul>
 </template>
 <script>
 export default {

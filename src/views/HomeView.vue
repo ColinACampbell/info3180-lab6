@@ -1,12 +1,10 @@
 <script>
-import NewsList from "@/components/NewsList.vue";
 export default {
   data() {
     return {
       message: "Hello World! Welcome to VueJS",
     };
   },
-  components: { NewsList },
 };
 </script>
 
@@ -21,7 +19,6 @@ export default {
         height="125"
       />
       <h1>{{ message }}</h1>
-      <NewsList />
     </div>
   </div>
 </template>
